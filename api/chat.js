@@ -40,7 +40,11 @@ module.exports = async function handler(req, res) {
 
   const { senha, messages } = req.body;
 
-  if (!senha || senha !== process.env.SENHA_ACESSO) {
+  // Comparação com trim() para evitar problemas de espaço
+  const senhaEnviada = (senha || '').trim();
+  const senhaCorreta = (process.env.SENHA_ACESSO || 'fabiana2026').trim();
+
+  if (!senhaEnviada || senhaEnviada !== senhaCorreta) {
     return res.status(401).json({ error: 'Senha incorreta' });
   }
 
